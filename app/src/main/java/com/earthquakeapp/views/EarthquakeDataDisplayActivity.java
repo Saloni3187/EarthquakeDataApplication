@@ -39,6 +39,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
     private TextView tv_no_data;
     private Boolean isCountryFieldEmpty = false;
     private String countries[];
+    InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         listOfCountries = (AutoCompleteTextView) findViewById(R.id.name_of_countries);
         lv_regions = (ListView) findViewById(R.id.region_list);
         tv_no_data = (TextView) findViewById(R.id.tv_no_data);
-
+        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         countries = getResources().getStringArray(R.array.countries);
         regions = new HashSet<>();
         setCountriesList();
@@ -68,6 +69,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imm.showSoftInput(getCurrentFocus(), 0);
                 listOfCountries.showDropDown();
                 if (listOfCountries.getText().toString().equals("")) {
                     isCountryFieldEmpty = true;
@@ -119,7 +121,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
             @Override
                 public void onResponse(Call<EarthquakeData> call, final Response<EarthquakeData> response) {
                     earthquakeList = response.body().getEarthquakes();
-                    parseServerData(earthquakeList ,selectedCountry.toLowerCase());
+                    parseServerData(earthquakeList);
                 }
                 @Override
                 public void onFailure(Call<EarthquakeData> call, Throwable t) {
@@ -129,21 +131,37 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
             });
     }
 
+    /**
+     * Method to convert Earthquake list to array list based on the region selected
+     * @param earthquakes
+     * @param regionName
+     * @return
+     */
+    private ArrayList<EarthquakesList> getEarthquakeList(List<EarthquakesList> earthquakes, String regionName){
+        ArrayList<EarthquakesList> results = new ArrayList<EarthquakesList>();
+        for (EarthquakesList data : earthquakes) {
+            {
+                if (data.getRegion().toLowerCase().contains(regionName.toLowerCase())) {
+                    results.add(data);
+                }
 
+            }
+        }
+        return results;
+    }
     /**
      * Method will parse all the data and call setDataInRegionList() to set data in views
      * Also check if region list is empty, it will set the flag to false
      * @param earthquakes
      */
-    private ArrayList<EarthquakesList> parseServerData(List<EarthquakesList> earthquakes , String selectedCountry){
-        ArrayList results = new ArrayList<EarthquakesList>();
+    private void parseServerData(List<EarthquakesList> earthquakes){
         if(earthquakes.size()!=0) {
             for (EarthquakesList data : earthquakes) {
                 if(!selectedCountry.equals("")){
-                    if (data.getRegion().toLowerCase().contains(selectedCountry)) {
+                    if (data.getRegion().toLowerCase().contains(selectedCountry.toLowerCase())) {
                         regions.add(data.getRegion());
-                        results.add(data);
                     }
+                    regions_list = new ArrayList<String>(regions);
                 }
             }
         }
@@ -152,7 +170,6 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         }
 
         setDataInRegionList();
-        return results;
     }
 
     /**
@@ -163,7 +180,6 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
      * Also the method is passing the data to another class when clicked on one of the list items.
      */
     private void setDataInRegionList() {
-        regions_list = new ArrayList<String>(regions);
         //if region list is empty ,hide list view
         if (regions_list.size() == 0) {
             lv_regions.setAdapter(new ArrayAdapter<String>(
@@ -180,7 +196,6 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         }
         //if regions are available for selected country, set the list in list view adapter
         else {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             lv_regions.setVisibility(View.VISIBLE);
             tv_no_data.setText(getResources().getString(R.string._txt_list_title));
@@ -195,7 +210,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
 
                     //setting the name of next activity
                     Intent intent = new Intent(EarthquakeDataDisplayActivity.this, EarthquakeDetailsDataActivity.class);
-                    data.setEarthquakeList(parseServerData(earthquakeList, region_name));
+                    data.setEarthquakeList(getEarthquakeList(earthquakeList,region_name));
                     //setting data to be passed in next activity
                     intent.putExtra("Region_name", region_name);
                     intent.putExtra("Country_name", selectedCountry);

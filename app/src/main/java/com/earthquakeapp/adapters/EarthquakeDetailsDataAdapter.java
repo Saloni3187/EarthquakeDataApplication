@@ -39,7 +39,6 @@ public class EarthquakeDetailsDataAdapter extends RecyclerView
             tv_magnitude = (TextView) itemView.findViewById(R.id.tv_magnitude);
             tv_depth = (TextView) itemView.findViewById(R.id.tv_depth);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
-            itemView.setOnClickListener(this);
         }
 
         @Override
