@@ -26,12 +26,21 @@
         android:textSize="@dimen/_txt_heading"
         android:textStyle="bold"
         android:layout_below="@id/tv_country"/>
+
+    <TextView
+        android:id="@+id/tv_total_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/_lbl_total_count"
+        android:textSize="@dimen/_txt_normal"
+        android:layout_below="@id/tv_region"/>
     <LinearLayout
         android:id="@+id/title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorOrange"
-        android:layout_below="@+id/tv_region"
+        android:layout_below="@+id/tv_total_count"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginTop="20dp">

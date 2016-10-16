@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-
 import com.earthquakeapp.adapters.EarthquakeDetailsDataAdapter;
 import com.earthquakeapp.globaldata.GlobalData;
 import com.earthquakeapp.model.EarthquakesList;
-
 import java.util.ArrayList;
 
 /**This class is used to display all the data of earthquake in tabular view  based upon the region clicked in the
@@ -20,6 +18,7 @@ public class EarthquakeDetailsDataActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TextView tv_country;
     private TextView tv_region;
+    private TextView tv_total_count;
     private ArrayList<EarthquakesList> earthquakeList;
     private String country;
     private String region;
@@ -34,6 +33,7 @@ public class EarthquakeDetailsDataActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         tv_country = (TextView) findViewById(R.id.tv_country);
         tv_region = (TextView) findViewById(R.id.tv_region);
+        tv_total_count= (TextView)findViewById(R.id.tv_total_count);
 
         getDetailedEarthquakeData();
     }
@@ -58,6 +58,7 @@ public class EarthquakeDetailsDataActivity extends AppCompatActivity {
         tv_region.setText(tv_region.getText()+" "+region);
 
         mAdapter = new EarthquakeDetailsDataAdapter(earthquakeList);
+        tv_total_count.setText(tv_total_count.getText()+" "+mAdapter.getItemCount()+"");
         //setting values in recycler view i.e data in tabular form.
         mRecyclerView.setAdapter(mAdapter);
     }

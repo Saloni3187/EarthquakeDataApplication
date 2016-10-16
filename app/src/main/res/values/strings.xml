@@ -246,6 +246,7 @@
     <string name="_lbl_depth">depth</string>
     <string name="_lbl_timedate">date and time</string>
     <string name="_txt_list_title">Click on list Item to get details data</string>
+    <string name="_lbl_total_count">Total number of earthquakes in the region: </string>
 
 
 

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -51,21 +53,38 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         countries = getResources().getStringArray(R.array.countries);
         regions = new HashSet<>();
-        setCountriesList();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setCountriesList();
+    }
     /**
      * This method is used to set properties to drop down view
      * e.g It will clear all the data when text view is empty.
      * Also it will call getDataFromServer() to retrieve data from server when item is clicked from drop down.
      */
     private void setCountriesList() {
+   //to set input only from a-z or A_Z
+        listOfCountries.setFilters(new InputFilter[] {
+                new InputFilter() {
+                    public CharSequence filter(CharSequence src, int start,
+                                               int end, Spanned dst, int dstart, int dend) {
+                        if(src.equals("")){ // for backspace
+                            return src;
+                        }
+                        if(src.toString().matches("[a-zA-Z ]+")){
+                            return src;
+                        }
+                        return "";
+                    }
+                }
+        });
         listOfCountries.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, countries));
-
         listOfCountries.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -109,7 +128,6 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
                 listOfCountries.showDropDown();
             }
         });
-
     }
 
     /**
@@ -196,7 +214,7 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         }
         //if regions are available for selected country, set the list in list view adapter
         else {
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+
             lv_regions.setVisibility(View.VISIBLE);
             tv_no_data.setText(getResources().getString(R.string._txt_list_title));
             tv_no_data.setVisibility(View.VISIBLE);
