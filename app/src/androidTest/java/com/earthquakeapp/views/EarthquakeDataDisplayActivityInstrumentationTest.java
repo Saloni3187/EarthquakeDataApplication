@@ -50,12 +50,12 @@ public class EarthquakeDataDisplayActivityInstrumentationTest {
     // Types the text "" into the Autocomplete Text and click
     // if no data available
     // Verifies the TextView with id = "R.id.tv_no_data" has text NO DATA FOUND.
-    @Test
-    public void validateRegionListWhenDataNotAvailable() {
-        onView(withId(R.id.name_of_countries)).perform(typeText("Latin America")).perform(click());
-        onView(withId(R.id.tv_no_data)).check(matches(withText("NO DATA FOUND")));
+//     @Test
+//     public void validateRegionListWhenDataNotAvailable() {
+//         onView(withId(R.id.name_of_countries)).perform(typeText("Latin America")).perform(click());
+//         onView(withId(R.id.tv_no_data)).check(matches(withText("NO DATA FOUND")));
 
 
-    }
+//     }
 
 }
