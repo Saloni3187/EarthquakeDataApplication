@@ -39,13 +39,13 @@ public class EarthquakeDataDisplayActivityInstrumentationTest {
     // Looks for an Autocomplete Text  with id = "R.id.name_of_countries"
     // Types the text "" into the Autocomplete Text and click
     // Verifies the TextView with id = "R.id.tv_no_data" visibility gone.
-    @Test
-    public void validateRegionListWhenDataAvailable() {
-        onView(withId(R.id.name_of_countries)).perform(typeText("Japan")).perform(click());
-        onData(hasToString(containsString("Japan"))).inAdapterView(withId(R.id.region_list)).atPosition(3);;
-        onView(withId(R.id.tv_no_data)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-
-    }
+    //@Test
+//    public void validateRegionListWhenDataAvailable() {
+//        onView(withId(R.id.name_of_countries)).perform(typeText("Japan")).perform(click());
+//        onData(hasToString(containsString("Japan"))).inAdapterView(withId(R.id.region_list)).atPosition(3);;
+//        onView(withId(R.id.tv_no_data)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+//
+//    }
     // Looks for an Autocomplete Text  with id = "R.id.name_of_countries"
     // Types the text "" into the Autocomplete Text and click
     // if no data available
