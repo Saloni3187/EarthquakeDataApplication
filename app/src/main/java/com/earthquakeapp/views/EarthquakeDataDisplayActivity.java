@@ -19,7 +19,6 @@ import com.earthquakeapp.globaldata.GlobalData;
 import com.earthquakeapp.interfaces.EarthquakeDataServiceInterface;
 import com.earthquakeapp.model.EarthquakeData;
 import com.earthquakeapp.model.EarthquakesList;
-import com.testfairy.TestFairy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
