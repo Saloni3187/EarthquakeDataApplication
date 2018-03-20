@@ -55,7 +55,6 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         countries = getResources().getStringArray(R.array.countries);
         regions = new HashSet<>();
-        TestFairy.begin(this, "5506f10dcc711fb0662c11b332b34b9f0bdde6c4");
 
     }
 
