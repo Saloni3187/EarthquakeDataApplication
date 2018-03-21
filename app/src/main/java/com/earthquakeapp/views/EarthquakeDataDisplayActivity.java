@@ -19,6 +19,7 @@ import com.earthquakeapp.globaldata.GlobalData;
 import com.earthquakeapp.interfaces.EarthquakeDataServiceInterface;
 import com.earthquakeapp.model.EarthquakeData;
 import com.earthquakeapp.model.EarthquakesList;
+import com.testfairy.TestFairy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,6 +55,8 @@ public class EarthquakeDataDisplayActivity extends AppCompatActivity {
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         countries = getResources().getStringArray(R.array.countries);
         regions = new HashSet<>();
+        TestFairy.begin(this, "5506f10dcc711fb0662c11b332b34b9f0bdde6c4");
+
 
     }
 
